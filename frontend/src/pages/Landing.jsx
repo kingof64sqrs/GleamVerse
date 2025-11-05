@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { asApiUrl } from '../api.js';
 
 export default function Landing(){
   const ringRef = useRef(null);
@@ -35,8 +36,8 @@ export default function Landing(){
         <p>Fine jewellery for the modern women</p>
       </div>
       <div className="jewels">
-        <img ref={cuffRef} className="jewel cuff" src="http://localhost:8000/static/jewellery/ring2.png" alt="ring" />
-        <img ref={ringRef} className="jewel ring" src="http://localhost:8000/static/jewellery/ring1.png" alt="ring" />
+        <img ref={cuffRef} className="jewel cuff" src={asApiUrl('/static/jewellery/ring2.png')} alt="ring" />
+        <img ref={ringRef} className="jewel ring" src={asApiUrl('/static/jewellery/ring1.png')} alt="ring" />
       </div>
       {/* Explore Collections CTA removed per request */}
     </section>
