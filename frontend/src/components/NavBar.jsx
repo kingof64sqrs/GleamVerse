@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
+import { asApiUrl } from '../api.js';
 
 export default function NavBar(){
   const auth = useAuth();
@@ -16,7 +17,7 @@ export default function NavBar(){
     <div className={`nav ${hidden?'nav-hidden':''}`}>
       <div className="nav-inner nav-flex">
         <Link className="brand" to="/">
-          <img className="brand-logo-img" src="http://localhost:8000/static/jewellery/logo.png" alt="logo" />
+          <img className="brand-logo-img" src={asApiUrl('/static/jewellery/logo.png')} alt="logo" />
           <div className="brand-name">GleamVerse</div>
         </Link>
         <div className="nav-actions">
