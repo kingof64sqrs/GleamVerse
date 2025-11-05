@@ -24,13 +24,8 @@ export default function ProductDetail(){
           alt={p.name}
           onError={(e)=>{
             const img = e.currentTarget;
-            if (!img.dataset.swap) {
-              img.dataset.swap = '1';
-              const s = img.src;
-              if (/\.jpg(\?|$)/i.test(s)) img.src = s.replace(/\.jpg(\?|$)/i, '.png$1');
-              else if (/\.png(\?|$)/i.test(s)) img.src = s.replace(/\.png(\?|$)/i, '.jpg$1');
-              else img.src = asApiUrl('/static/jewellery/logo.png');
-            } else {
+            if (!img.dataset.fallback) {
+              img.dataset.fallback = '1';
               img.src = asApiUrl('/static/jewellery/logo.png');
             }
           }}

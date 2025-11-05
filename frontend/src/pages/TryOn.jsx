@@ -16,17 +16,11 @@ export default function TryOn(){
     const qs = new URLSearchParams(location.hash.split('?')[1] || location.search.split('?')[1] || '');
     const imageQ = qs.get('image');
     const category = (qs.get('category') || '').toLowerCase();
-    const trySwapExt = (url) => {
-      if (!url) return url;
-      if (/\.jpg(\?|$)/i.test(url)) return url.replace(/\.jpg(\?|$)/i, '.png$1');
-      if (/\.png(\?|$)/i.test(url)) return url.replace(/\.png(\?|$)/i, '.jpg$1');
-      return url;
-    };
     overlayImg.crossOrigin = 'anonymous';
     overlayImg.onload = ()=>{ overlayReady=true; };
     overlayImg.onerror = ()=>{
-      const swapped = trySwapExt(overlayImg.src);
-      if (swapped !== overlayImg.src) { overlayReady=false; overlayImg.src = swapped; }
+      console.error('Failed to load overlay image:', overlayImg.src);
+      overlayReady = false;
     };
     if (imageQ) overlayImg.src = imageQ;
     let overlayReady = false;

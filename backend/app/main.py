@@ -11,6 +11,8 @@ app.add_middleware(
 	allow_origins=[
 		"http://localhost:5500",
 		"http://127.0.0.1:5500",
+		"http://140.238.227.29:5500",
+		"http://140.238.227.29:8000",
 	],
 	allow_credentials=True,
 	allow_methods=["*"],
@@ -21,11 +23,15 @@ app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(products.router, prefix="/products", tags=["products"])
 
 # Serve jewellery assets for demo (backend/assets/jewellery)
-project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-assets_dir = os.path.join(project_root, "backend", "assets")
-static_jewellery_path = os.path.join(assets_dir, "jewellery")
+# Get the absolute path to the assets directory
+current_file_dir = os.path.dirname(os.path.abspath(__file__))
+backend_dir = os.path.dirname(current_file_dir)
+static_jewellery_path = os.path.join(backend_dir, "assets", "jewellery")
+print(f"Static jewellery path: {static_jewellery_path}")
+print(f"Path exists: {os.path.isdir(static_jewellery_path)}")
 if os.path.isdir(static_jewellery_path):
 	app.mount("/static/jewellery", StaticFiles(directory=static_jewellery_path), name="jewellery")
+	print(f"Mounted /static/jewellery to {static_jewellery_path}")
 
 @app.get("/")
 def root():
