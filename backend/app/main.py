@@ -9,15 +9,10 @@ from .routers import auth, products
 app = FastAPI(title="GleamVerse API", version="1.0.0")
 
 # CORS middleware - MUST come before static files mounting
+# Allow all origins with regex pattern since we can't use "*" with credentials
 app.add_middleware(
 	CORSMiddleware,
-	allow_origins=[
-		"http://localhost:5500",
-		"http://127.0.0.1:5500",
-		"http://140.238.227.29:5500",
-		"http://140.238.227.29:8000",
-		"*"  # Allow all origins for static files
-	],
+	allow_origin_regex=r".*",  # Allow all origins
 	allow_credentials=True,
 	allow_methods=["*"],
 	allow_headers=["*"],
