@@ -1,11 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request
 import os
 from .routers import auth, products
 
 app = FastAPI(title="GleamVerse API", version="1.0.0")
 
+# CORS middleware - MUST come before static files mounting
 app.add_middleware(
 	CORSMiddleware,
 	allow_origins=[
@@ -13,10 +16,12 @@ app.add_middleware(
 		"http://127.0.0.1:5500",
 		"http://140.238.227.29:5500",
 		"http://140.238.227.29:8000",
+		"*"  # Allow all origins for static files
 	],
 	allow_credentials=True,
 	allow_methods=["*"],
 	allow_headers=["*"],
+	expose_headers=["*"],
 )
 
 app.include_router(auth.router, prefix="/auth", tags=["auth"])

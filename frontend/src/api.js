@@ -1,13 +1,7 @@
 const envBase = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_BASE_URL) ? String(import.meta.env.VITE_API_BASE_URL) : '';
-const isLocal = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
-export const API_BASE = envBase?.trim() || (isLocal ? 'http://localhost:8000' : '');
-if (!API_BASE) {
-  const msg = 'Missing API base URL. Set VITE_API_BASE_URL in the environment.';
-  console.error(msg);
-  // Fail closed: surface to user in UI environments
-  try { alert(msg); } catch {}
-  throw new Error(msg);
-}
+// Always use server IP for deployed environment
+export const API_BASE = envBase?.trim() || 'http://140.238.227.29:8000';
+console.log('API_BASE configured as:', API_BASE);
 
 export const asApiUrl = (u) => {
   if (!u) return u;
